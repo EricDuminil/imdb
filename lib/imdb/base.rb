@@ -310,7 +310,7 @@ module Imdb
     end
 
     def self.url_for(imdb_id, page = :reference)
-      "#{Imdb::HTTP_PROTOCOL}://www.imdb.com/title/tt#{imdb_id}/#{page}"
+      "#{Imdb::HTTP_PROTOCOL}://www.imdb.com/title/tt#{imdb_id.to_s.rjust(7, '0')}/#{page}"
     end
 
     # Convenience method for search
