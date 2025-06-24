@@ -62,6 +62,7 @@ module Imdb
         top_directors
       end
     end
+
     # NOTE: Keeping Base#director method for compatibility.
     alias director directors
 
@@ -220,12 +221,13 @@ module Imdb
       if @title && !force_refresh
         @title
       else
-        original_title = get_node("//h3[@itemprop='name']/following-sibling::text()")
-        @title = if original_title.empty?
-                   get_node("//h3[@itemprop='name']/text()")
-                 else
-                   original_title
-                 end
+        # Title format has been changed in june 2025
+        original_title = get_node('//h1/following-sibling::div[1]/text()')
+        @title = if original_title.nil?
+            get_node('//span[@class="hero__primary-text"]/text()')
+          else
+            original_title.sub(/Original title: ?/i, '')
+          end
       end
     end
 
@@ -251,7 +253,7 @@ module Imdb
       get_nodes('#akas tr', releaseinfo_document) do |aka|
         {
           version: aka.at('td:nth-child(1)').text,
-          title:   aka.at('td:nth-child(2)').text,
+          title: aka.at('td:nth-child(2)').text,
         }
       end
     end
@@ -285,10 +287,10 @@ module Imdb
 
     def userreviews_document(data_key = nil)
       path = if data_key
-               "reviews/_ajax?paginationKey=#{data_key}"
-             else
-               'reviews'
-             end
+          "reviews/_ajax?paginationKey=#{data_key}"
+        else
+          'reviews'
+        end
       Nokogiri::HTML(Imdb::Movie.find_by_id(@id, path))
     end
 
