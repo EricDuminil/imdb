@@ -274,7 +274,7 @@ module Imdb
     end
 
     def fullcredits_document
-      @fullcredits_document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id, 'fullcredits'))
+      @fullcredits_document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id, 'fullcredits/?ref_=tt_cst_sm'))
     end
 
     def apex_document
@@ -308,7 +308,7 @@ module Imdb
 
     # Use HTTParty to fetch the raw HTML for this movie.
     def self.find_by_id(imdb_id, page = :reference)
-      open(Imdb::Base.url_for(imdb_id, page), Imdb::HTTP_HEADER)
+      open(p(Imdb::Base.url_for(imdb_id, page)), Imdb::HTTP_HEADER)
     end
 
     def self.url_for(imdb_id, page = :reference)
