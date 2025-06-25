@@ -86,17 +86,17 @@ module Imdb
 
     # Returns an array of genres (as strings)
     def genres
-      get_nodes("//li[span[contains(text(), 'Genre')]]/div/ul/li/a")
+      get_nodes("//li[span[starts-with(text(), 'Genre')]]/div/ul/li/a")
     end
 
     # Returns an array of languages as strings.
     def languages
-      get_nodes("//li[span[contains(text(), 'Language')]]/div/ul/li/a")
+      get_nodes("//li[span[starts-with(text(), 'Language')]]/div/ul/li/a")
     end
 
     # Returns an array of countries as strings.
     def countries
-      get_nodes("//tr[contains(@class, 'item') and td[text()='Country']]/td[2]//a")
+      get_nodes("//li[span[starts-with(text(), 'Countr')]]/div/ul/li/a")
     end
 
     # Returns the duration of the movie in minutes as an integer.
