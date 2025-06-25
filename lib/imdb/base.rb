@@ -86,7 +86,7 @@ module Imdb
 
     # Returns an array of genres (as strings)
     def genres
-      get_nodes("//tr[td[contains(@class, 'label') and text()='Genres']]/td[2]//a")
+      get_nodes("//li[span[contains(text(), 'Genre')]]/div/ul/li/a")
     end
 
     # Returns an array of languages as strings.
