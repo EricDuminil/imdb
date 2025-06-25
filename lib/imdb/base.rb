@@ -101,8 +101,8 @@ module Imdb
 
     # Returns the duration of the movie in minutes as an integer.
     def length
-      get_node("//tr[td[contains(@class, 'label') and text()='Runtime']]/td[2]") do |runtime|
-        runtime.content.strip.gsub(/ min$/, '').to_i
+      get_node("//li[span[text()='Runtime']]/div/ul/li/span[contains(text(), 'min')]") do |runtime|
+        runtime.content[/(\d+) min/].to_i
       end
     end
 
