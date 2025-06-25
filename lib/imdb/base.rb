@@ -91,7 +91,7 @@ module Imdb
 
     # Returns an array of languages as strings.
     def languages
-      get_nodes("//tr[td[contains(@class, 'label') and text()='Language']]/td[2]//a")
+      get_nodes("//li[span[contains(text(), 'Language')]]/div/ul/li/a")
     end
 
     # Returns an array of countries as strings.
