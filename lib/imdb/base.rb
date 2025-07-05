@@ -55,7 +55,8 @@ module Imdb
     # Returns the name of the directors.
     # Extracts from full_credits for movies with more than 3 directors.
     def directors
-      top_directors = get_nodes("div[text()*='Director']//a")
+      # top_directors = get_nodes("//span[starts-with(text(), 'Director')]/ancestor::section[1]//a")
+      top_directors = get_nodes("//div[@data-testid='sub-section-director']//a")
       if top_directors.empty? || top_directors.last.start_with?('See more')
         all_directors
       else
