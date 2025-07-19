@@ -298,18 +298,15 @@ module Imdb
       Nokogiri::HTML(Imdb::Movie.find_by_id(@id, path))
     end
 
-    # FIXME
     def all_directors
-      fullcredits_document.search("h4[text()*='Directed by'] + table tbody tr td[class='name']").map do |name|
-        name.content.strip
-      end.uniq
+      query = "//div[@data-testid='sub-section-director']//a[contains(@class, '#{BIG_TEXT}')]"
+      get_nodes(query, fullcredits_document)
     end
 
     # FIXME
     def all_writers
-      fullcredits_document.search("h4[text()*='Writing Credits'] + table tbody tr td[class='name']").map do |name|
-        name.content.strip
-      end.uniq
+      query = "//div[@data-testid='sub-section-writer']//a[contains(@class, '#{BIG_TEXT}')]"
+      get_nodes(query, fullcredits_document)
     end
 
     def self.find_by_id(imdb_id, page = :reference)
