@@ -26,15 +26,13 @@ module Imdb
       @poster_thumbnail = nil
     end
 
-    # FIXME
     # Returns an array with cast members
     def cast_members
-      get_nodes('table.cast_list td.itemprop a')
+      get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "name-credits--title-text-big")]')
     end
 
-    # FIXME
     def cast_member_ids
-      get_nodes('table.cast_list tr td[itemprop="actor"] a') { |a| a['href'][/(?<=\/name\/)nm\d+/] }
+      get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "name-credits--title-text-big")]') { |a| a['href'][/(?<=\/name\/)nm\d+/] }
     end
 
     # FIXME
