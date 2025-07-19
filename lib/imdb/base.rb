@@ -307,9 +307,8 @@ module Imdb
       end.uniq
     end
 
-    # Use HTTParty to fetch the raw HTML for this movie.
     def self.find_by_id(imdb_id, page = :reference)
-      open(p(Imdb::Base.url_for(imdb_id, page)), Imdb::HTTP_HEADER)
+      URI.open(p(Imdb::Base.url_for(imdb_id, page)), Imdb::HTTP_HEADER)
     end
 
     def self.url_for(imdb_id, page = :reference)
