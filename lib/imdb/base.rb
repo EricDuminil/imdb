@@ -303,7 +303,6 @@ module Imdb
       get_nodes(query, fullcredits_document)
     end
 
-    # FIXME
     def all_writers
       query = "//div[@data-testid='sub-section-writer']//a[contains(@class, '#{BIG_TEXT}')]"
       get_nodes(query, fullcredits_document)
