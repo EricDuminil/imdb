@@ -6,6 +6,8 @@ module Imdb
     attr_accessor :id, :url, :related_person, :related_person_role
     attr_writer :title, :year, :poster_thumbnail
 
+    BIG_TEXT = "name-credits--title-text-big"
+
     # Initialize a new IMDB movie object with it's IMDB id (as a String)
     #
     #   movie = Imdb::Movie.new("0095016")
@@ -35,10 +37,8 @@ module Imdb
       get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "name-credits--title-text-big")]') { |a| a['href'][/(?<=\/name\/)nm\d+/] }
     end
 
-    # FIXME
     # Returns an array with cast characters
     def cast_characters
-      # get_nodes('table.cast_list td.character') { |a| a.content.tr("\u00A0", ' ').gsub(/(\(|\/).*/, '').strip }
       get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "ipc-link--inherit-color")]')
     end
 
@@ -59,7 +59,7 @@ module Imdb
     # Extracts from full_credits for movies with more than 3 directors.
     def directors
       # top_directors = get_nodes("//span[starts-with(text(), 'Director')]/ancestor::section[1]//a")
-      top_directors = get_nodes("//div[@data-testid='sub-section-director']//a")
+      top_directors = get_nodes("//div[@data-testid='sub-section-director']//a[contains(@class, '#{BIG_TEXT}')]")
       if top_directors.empty? || top_directors.last.start_with?('See more')
         all_directors
       else
@@ -73,7 +73,7 @@ module Imdb
     # Returns the names of Writers
     # Extracts from full_credits for movies with more than 3 writers.
     def writers
-      top_writers = get_nodes("div[text()*='Writer']//a")
+      top_writers = get_nodes("//div[@data-testid='sub-section-writer']//a[contains(@class, '#{BIG_TEXT}')]")
       if top_writers.empty? || top_writers.last.start_with?('See more')
         all_writers
       else
