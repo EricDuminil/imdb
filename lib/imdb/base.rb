@@ -38,10 +38,10 @@ module Imdb
     # FIXME
     # Returns an array with cast characters
     def cast_characters
-      get_nodes('table.cast_list td.character') { |a| a.content.tr("\u00A0", ' ').gsub(/(\(|\/).*/, '').strip }
+      # get_nodes('table.cast_list td.character') { |a| a.content.tr("\u00A0", ' ').gsub(/(\(|\/).*/, '').strip }
+      get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "ipc-link--inherit-color")]')
     end
 
-    # FIXME
     # Returns an array with cast members and characters
     def cast_members_characters(sep = '=>')
       cast_members.zip(cast_characters).map do |cast_member, cast_character|
