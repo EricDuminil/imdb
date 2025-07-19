@@ -26,20 +26,24 @@ module Imdb
       @poster_thumbnail = nil
     end
 
+    # FIXME
     # Returns an array with cast members
     def cast_members
       get_nodes('table.cast_list td.itemprop a')
     end
 
+    # FIXME
     def cast_member_ids
       get_nodes('table.cast_list tr td[itemprop="actor"] a') { |a| a['href'][/(?<=\/name\/)nm\d+/] }
     end
 
+    # FIXME
     # Returns an array with cast characters
     def cast_characters
       get_nodes('table.cast_list td.character') { |a| a.content.tr("\u00A0", ' ').gsub(/(\(|\/).*/, '').strip }
     end
 
+    # FIXME
     # Returns an array with cast members and characters
     def cast_members_characters(sep = '=>')
       cast_members.zip(cast_characters).map do |cast_member, cast_character|
@@ -47,6 +51,7 @@ module Imdb
       end
     end
 
+    # FIXME
     # Returns an array of starring actors as strings
     def starring_actors
       get_nodes("//div[h4[text()='Stars:']]/a[starts-with(@href, '/name/')]", apex_document)
@@ -295,12 +300,14 @@ module Imdb
       Nokogiri::HTML(Imdb::Movie.find_by_id(@id, path))
     end
 
+    # FIXME
     def all_directors
       fullcredits_document.search("h4[text()*='Directed by'] + table tbody tr td[class='name']").map do |name|
         name.content.strip
       end.uniq
     end
 
+    # FIXME
     def all_writers
       fullcredits_document.search("h4[text()*='Writing Credits'] + table tbody tr td[class='name']").map do |name|
         name.content.strip
