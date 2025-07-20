@@ -6,7 +6,7 @@ module Imdb
     attr_accessor :id, :url, :related_person, :related_person_role
     attr_writer :title, :year, :poster_thumbnail
 
-    BIG_TEXT = "name-credits--title-text-big"
+    BIG_TEXT = 'name-credits--title-text-big'
 
     # Initialize a new IMDB movie object with it's IMDB id (as a String)
     #
@@ -30,16 +30,16 @@ module Imdb
 
     # Returns an array with cast members
     def cast_members
-      get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "name-credits--title-text-big")]')
+      get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, '#{BIG_TEXT}')]")
     end
 
     def cast_member_ids
-      get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "name-credits--title-text-big")]') { |a| a['href'][/(?<=\/name\/)nm\d+/] }
+      get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, '#{BIG_TEXT}')]") { |a| a['href'][/(?<=\/name\/)nm\d+/] }
     end
 
     # Returns an array with cast characters
     def cast_characters
-      get_nodes('//div[@data-testid="sub-section-cast"]//li[@data-testid="name-credits-list-item"]//a[contains(@class, "ipc-link--inherit-color")]')
+      get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, 'ipc-link--inherit-color')]")
     end
 
     # Returns an array with cast members and characters
