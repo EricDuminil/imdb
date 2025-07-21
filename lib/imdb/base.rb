@@ -122,7 +122,7 @@ module Imdb
 
     # Returns a string containing the (possibly truncated) plot summary.
     def plot
-      get_node('//section[contains(@class, "overview")]//hr[last()]/preceding-sibling::div[1]') do |plot_html|
+      get_node('//span[@data-testid="plot-xl"]') do |plot_html|
         sanitize_plot(plot_html.content.strip)
       end
     end
