@@ -237,7 +237,7 @@ module Imdb
 
     # Returns an integer containing the year (CCYY) the movie was released in.
     def year
-      @year || get_node("//h3[@itemprop='name']/span/a/text()") { |year_html| year_html.content.strip.to_i }
+      @year || get_node("//span[@data-testid='hero__primary-text-suffix']") { |year_html| year_html.content[/\d+/].to_i }
     end
 
     # Returns release date for the movie.
