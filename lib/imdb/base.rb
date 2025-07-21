@@ -154,9 +154,7 @@ module Imdb
 
     # Returns a float containing the average user rating
     def rating
-      get_node('.ipl-rating-star__rating') do |rating_html|
-        rating_html.content.strip.to_f
-      end
+      get_node('span[@class="ipc-rating-star--rating"]').to_f
     end
 
     # Returns an enumerator of user reviews as hashes
