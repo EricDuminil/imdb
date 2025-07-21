@@ -38,6 +38,7 @@ module Imdb
     end
 
     # Returns an array with cast characters
+    # NOTE: A part is missing (e.g. voice, or 'uncredited'). Bug or feature?
     def cast_characters
       get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, 'ipc-link--inherit-color')]")
     end
