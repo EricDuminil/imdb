@@ -129,7 +129,7 @@ module Imdb
 
     # Returns a string containing the plot synopsis
     def plot_synopsis
-      get_node("li[@id*='synopsis']", summary_document)
+      get_node("div[@data-testid='sub-section-synopsis']", summary_document)
     end
 
     # Retruns a string with a longer plot summary
