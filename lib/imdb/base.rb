@@ -140,7 +140,7 @@ module Imdb
 
     # Returns a string containing the URL for a thumbnail sized movie poster.
     def poster_thumbnail
-      @poster_thumbnail || get_node("img[@alt*='Poster']") { |poster_img| poster_img['src'] }
+      @poster_thumbnail || get_node("div[@data-testid='hero-media__poster']//img") { |poster_img| poster_img['src'] }
     end
 
     # Returns a string containing the URL to the movie poster.
