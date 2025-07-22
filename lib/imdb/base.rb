@@ -252,11 +252,12 @@ module Imdb
     end
 
     # Returns alternative titles from imdb_url/releaseinfo
+    # It only contains the first values. JSON would be needed, and requires authentication
     def also_known_as
-      get_nodes('#akas tr', releaseinfo_document) do |aka|
+      get_nodes('div[@data-testid="sub-section-akas"]//li[@data-testid="list-item"]', releaseinfo_document) do |aka|
         {
-          version: aka.at('td:nth-child(1)').text,
-          title: aka.at('td:nth-child(2)').text,
+          version: aka.at('.//span').text,
+          title: aka.at('./div//span').text,
         }
       end
     end
