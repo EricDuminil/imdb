@@ -30,17 +30,18 @@ module Imdb
 
     # Returns an array with cast members
     def cast_members
-      get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, '#{BIG_TEXT}')]")
+      get_nodes(names_xpath('Cast'))
     end
 
     def cast_member_ids
-      get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, '#{BIG_TEXT}')]") { |a| a['href'][/(?<=\/name\/)nm\d+/] }
+      get_nodes(names_xpath('Cast')) { |a| a['href'][/(?<=\/name\/)nm\d+/] }
     end
 
     # Returns an array with cast characters
     # NOTE: A part is missing (e.g. voice, or 'uncredited'). Bug or feature?
     def cast_characters
-      get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, 'ipc-link--inherit-color')]")
+      get_nodes(names_xpath('Cast', 'ipc-link--inherit-color'))
+      # get_nodes("//div[@data-testid='sub-section-cast']//li[@data-testid='name-credits-list-item']//a[contains(@class, 'ipc-link--inherit-color')]")
     end
 
     # Returns an array with cast members and characters
@@ -56,13 +57,6 @@ module Imdb
       get_nodes("//div[h4[text()='Stars:']]/a[starts-with(@href, '/name/')]", apex_document)
     end
 
-    # Looks for a section starting with section_name, and returns the credits
-    def names_xpath(section_name)
-      "//section[contains(@class, 'ipc-page-section')]" +
-        "[.//span[starts-with(text(), '#{section_name}')]]" +
-        "//div[contains(@class, 'full-credits')]" +
-        "//a[contains(@class, '#{BIG_TEXT}')]"
-    end
 
     # Returns the name of the directors.
     # Extracts from full_credits for movies with more than 3 directors.
@@ -270,6 +264,14 @@ module Imdb
     end
 
     private
+
+    # Looks for a section starting with section_name (singular or plural), and returns the credits
+    def names_xpath(section_name, link_class=BIG_TEXT)
+      "//section[contains(@class, 'ipc-page-section')]" +
+        "[.//span[text() = '#{section_name}' or text() = '#{section_name}s']]" +
+        "//div[contains(@class, 'full-credits')]" +
+        "//a[contains(@class, '#{link_class}')]"
+    end
 
     # Returns a new Nokogiri document for parsing.
     def document
