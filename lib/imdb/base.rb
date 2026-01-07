@@ -56,11 +56,18 @@ module Imdb
       get_nodes("//div[h4[text()='Stars:']]/a[starts-with(@href, '/name/')]", apex_document)
     end
 
+    # Looks for a section starting with section_name, and returns the credits
+    def names_xpath(section_name)
+      "//section[contains(@class, 'ipc-page-section')]" +
+        "[.//span[starts-with(text(), '#{section_name}')]]" +
+        "//div[contains(@class, 'full-credits')]" +
+        "//a[contains(@class, '#{BIG_TEXT}')]"
+    end
+
     # Returns the name of the directors.
     # Extracts from full_credits for movies with more than 3 directors.
     def directors
-      # top_directors = get_nodes("//span[starts-with(text(), 'Director')]/ancestor::section[1]//a")
-      top_directors = get_nodes("//div[@data-testid='sub-section-director']//a[contains(@class, '#{BIG_TEXT}')]")
+      top_directors = get_nodes(names_xpath('Director'))
       if top_directors.empty? || top_directors.last.start_with?('See more')
         all_directors
       else
@@ -299,12 +306,12 @@ module Imdb
     end
 
     def all_directors
-      query = "//div[@data-testid='sub-section-director']//a[contains(@class, '#{BIG_TEXT}')]"
+      query = names_xpath('Director')
       get_nodes(query, fullcredits_document)
     end
 
     def all_writers
-      query = "//div[@data-testid='sub-section-writer']//a[contains(@class, '#{BIG_TEXT}')]"
+      query = names_xpath('Writer')
       get_nodes(query, fullcredits_document)
     end
 
