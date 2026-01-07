@@ -75,7 +75,7 @@ module Imdb
     # Returns the names of Writers
     # Extracts from full_credits for movies with more than 3 writers.
     def writers
-      top_writers = get_nodes("//div[@data-testid='sub-section-writer']//a[contains(@class, '#{BIG_TEXT}')]")
+      top_writers = get_nodes(names_xpath('Writer'))
       if top_writers.empty? || top_writers.last.start_with?('See more')
         all_writers
       else
